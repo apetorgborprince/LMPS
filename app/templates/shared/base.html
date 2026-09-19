@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#172554"><title>{% block title %}Adidome DA/RC JHS LPMS{% endblock %}</title><link rel="stylesheet" href="{{ url_for('static', filename='css/lpms.css') }}"><script src="{{ url_for('static', filename='js/lpms.js') }}" defer></script></head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+{% if current_user.is_authenticated %}<div class="shell">{% include "shared/_sidebar.html" %}<div class="nav-backdrop" data-nav-backdrop aria-hidden="true"></div><main class="main" id="main-content"><header class="topbar"><button class="icon-btn mobile-menu" type="button" data-menu-toggle aria-label="Open navigation" aria-expanded="false">☰</button><div class="topline"><div><div class="eyebrow">Adidome DA/RC Junior High School</div><h2>{% block page_title %}{% endblock %}</h2></div><div class="top-actions"><button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle dark mode" aria-pressed="false"><span aria-hidden="true">◐</span> <span data-theme-label>Dark mode</span></button><div class="who"><span class="status-dot"></span> <b>{{ current_user.full_name }}</b><span class="role-tag">{{ current_user.role_name|title }}</span></div></div></div></header>{% endif %}
+{% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<ul class="flashes"{% if not current_user.is_authenticated %} style="max-width:380px; margin:20px auto 0;"{% endif %}>{% for category, message in messages %}<li class="flash-{{ category }}" role="status">{{ message }}</li>{% endfor %}</ul>{% endif %}{% endwith %}
+{% block content %}{% endblock %}
+{% if current_user.is_authenticated %}<footer class="app-footer">LPMS · Secure learner-plan workflow · Adidome DA/RC JHS</footer></main></div>{% endif %}
+</body></html>

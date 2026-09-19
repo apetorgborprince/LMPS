@@ -1,0 +1,17 @@
+{% extends "shared/base.html" %}
+{% block title %}Review {{ plan.reference }} — Adidome DA/RC JHS LPMS{% endblock %}
+{% block page_title %}Review &amp; approve{% endblock %}
+{% block content %}
+<div class="breadcrumb"><a href="{{ url_for('headmaster.pending_approval') }}">Pending Approval</a> / <b>{{ plan.reference }}</b> &mdash; {{ plan.teacher.user.full_name }}</div>
+<div class="twocol"><div>
+<div class="panel"><h2>{{ plan.reference }}<small>{{ plan.subject.name }} &middot; {{ plan.class_.name }} &middot; Week {{ plan.week }} &middot; <span class="pill {{ plan.current_status|pill_class }}">{{ plan.current_status|replace('_',' ')|title }}</span></small></h2><div class="panel-body">
+<p><b>Topic:</b> {{ plan.current_version.topic }}</p><p><b>Content standard:</b> {{ plan.current_version.content_standard }}</p><p><b>Indicator:</b> {{ plan.current_version.indicator }}</p><p><b>Learning objectives:</b> {{ plan.current_version.learning_objectives }}</p><p><b>Activities:</b> {{ plan.current_version.activities }}</p>
+</div></div>
+{% if actionable %}<div class="panel"><h2>Decision</h2><div class="panel-body">
+<form method="POST" onsubmit="return confirm('Are you sure you want to approve this learner plan?');">{{ approve_form.hidden_tag() }}<label class="checkfield">{{ approve_form.confirm() }} {{ approve_form.confirm.label.text }}</label>{% for e in approve_form.confirm.errors %}<span class="error">{{ e }}</span>{% endfor %}{{ approve_form.submit(class="btn gold") }}</form>
+<form method="POST" style="margin-top:20px;">{{ reject_form.hidden_tag() }}<div class="field">{{ reject_form.reason.label }}{{ reject_form.reason() }}{% for e in reject_form.reason.errors %}<span class="error">{{ e }}</span>{% endfor %}</div>{{ reject_form.submit(class="btn danger") }}</form>
+<form method="POST" style="margin-top:20px;">{{ correction_form.hidden_tag() }}<div class="field">{{ correction_form.comment.label }}{{ correction_form.comment() }}{% for e in correction_form.comment.errors %}<span class="error">{{ e }}</span>{% endfor %}</div>{{ correction_form.submit(class="btn ghost") }}</form>
+</div></div>{% else %}<p class="muted">This plan is not currently awaiting a decision.</p>{% endif %}
+</div>
+<div class="panel"><h2>Comments &amp; history</h2><div class="timeline">{% for v in plan.versions %}{% for c in v.comments %}<div class="tlitem"><div class="tldot"></div><div class="tlbody"><b>v{{ v.version_number }} — {{ c.author.full_name }}</b><div class="msg">{{ c.comment }}</div></div></div>{% endfor %}{% endfor %}{% for v in plan.versions %}<div class="tlitem"><div class="tldot"></div><div class="tlbody"><b>Version {{ v.version_number }}</b><div class="meta">{{ v.created_at }}</div></div></div>{% endfor %}</div></div>
+</div>{% endblock %}
