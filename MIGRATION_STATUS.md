@@ -1,29 +1,24 @@
 # LMPS Migration Status
 
-## Completed database phases
+## Completed
+- DB-01 through DB-09 Supabase database foundation
+- DB-10 application migration foundation
+- Teacher learner-plan workflow
+- Headmaster review workflow
+- SISO monitoring and reporting
+- Admin user and school administration
+- Teacher assignments
+- SISO school assignments
+- Notifications
+- Supabase Storage attachments
+- Server-side token storage
+- Active workflow restricted to ADMIN, TEACHER, HEADMASTER and SISO
 
-- DB-01 — Foundation
-- DB-02 — Teacher structure
-- DB-03 — Learner plans and versions
-- DB-04 — Headmaster/SISO structure
-- DB-05 — Supabase Auth/RBAC foundation
-- DB-06 — Row Level Security
-- DB-07 — Learner-plan workflow integrity
-- DB-08 — Notifications
-- DB-09 — SISO monitoring/reporting hardening
-
-## DB-10 application migration
-
-The Flask application is being migrated from the legacy SQLAlchemy/local-auth architecture to:
-
-Flask UI → Supabase data layer → Supabase Auth → PostgreSQL/RLS
-
-Teacher learner-plan operations have been moved to the Supabase data layer. Headmaster, SISO, Admin, reporting, files, and remaining legacy services still require migration before the application is considered complete.
-
-## Target workflow
-
-TEACHER → HEADMASTER → SISO
-
-ADMIN is the system administration role.
-
-HOD is not part of the target architecture.
+## Final production checks
+- Configure real Supabase publishable and service-role keys.
+- Configure HTTPS and secure session cookies.
+- Create initial ADMIN.
+- Configure school, academic year and term.
+- Create staff accounts and assignments.
+- Run teacher draft → submit → Headmaster decision → SISO monitoring.
+- Run Supabase security/performance advisors after any further schema change.
