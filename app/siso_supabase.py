@@ -27,6 +27,12 @@ class SISORepository:
  def create_visit(self,school_assignment_id,visit_date,visit_type,purpose,observation):
   from flask_login import current_user
   return _first(self.client.table("siso_monitoring_visits").insert({"supervision_assignment_id":str(school_assignment_id),"visit_date":visit_date,"visit_type":visit_type,"purpose":purpose,"general_observation":observation,"created_by":str(current_user.id)}).select("id").single().execute())
+ def add_observation(self,visit_id,area,observation,status):return self.client.table("siso_monitoring_observations").insert({"visit_id":str(visit_id),"area":area,"observation":observation,"status":status}).execute()
+ def add_action(self,visit_id,action_point,responsible_user_id=None,due_date=None):return self.client.table("siso_action_points").insert({"visit_id":str(visit_id),"action_point":action_point,"responsible_user_id":responsible_user_id or None,"due_date":due_date}).execute()
+ def follow_ups(self,limit=100):
+  rows=_rows(self.client.table("siso_follow_ups").select("id,action_point_id,follow_up_date,outcome,status,created_at,siso_action_points(action_point,visit_id)").order("follow_up_date",desc=True).limit(limit).execute())
+  for r in rows:r["action"]=_obj(r.pop("siso_action_points",None))
+  return [_obj(r) for r in rows]
  def reports(self):
   approved=_rows(self.client.table("siso_approved_learner_plans").select("id,reference,subject_name,class_name,week_number,status,academic_year_id,term_id,teacher_assignment_id,teacher_assignments(teacher_profiles(staff_id,users(first_name,last_name)))").execute());teachers={}
   for p in approved:
