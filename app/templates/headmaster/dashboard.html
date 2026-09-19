@@ -1,0 +1,8 @@
+{% extends "shared/base.html" %}
+{% block title %}Headmaster Dashboard — Adidome DA/RC JHS LPMS{% endblock %}
+{% block page_title %}Headmaster Dashboard{% endblock %}
+{% block content %}
+<div class="page-intro"><div><p class="eyebrow">Headmaster review workspace</p><h1>School-wide learner plans</h1><p class="muted">Review teacher submissions and return plans for correction when necessary.</p></div><a class="btn gold" href="{{ url_for('headmaster.pending_approval') }}">Review pending plans</a></div>
+<div class="stats"><div class="stat"><div class="n">{{ counts.total_teachers }}</div><div class="l">Active teachers</div></div><div class="stat"><div class="n">{{ counts.pending_approval }}</div><div class="l">Pending review</div></div><div class="stat"><div class="n">{{ counts.approved }}</div><div class="l">Approved</div></div><div class="stat"><div class="n">{{ counts.rejected }}</div><div class="l">Rejected</div></div></div>
+<div class="quick-actions"><a class="action-card" href="{{ url_for('headmaster.pending_approval') }}"><span class="action-icon">✓</span><div><strong>Pending approval</strong><small>Review submitted and resubmitted plans</small></div></a><a class="action-card" href="{{ url_for('headmaster.approved_plans') }}"><span class="action-icon">●</span><div><strong>Approved plans</strong><small>View plans cleared for monitoring</small></div></a><a class="action-card" href="{{ url_for('headmaster.rejected_plans') }}"><span class="action-icon">!</span><div><strong>Rejected plans</strong><small>Review plans that were rejected</small></div></a></div>
+{% endblock %}
