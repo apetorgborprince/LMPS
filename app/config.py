@@ -11,15 +11,14 @@ class Config:
     if not SECRET_KEY:
         raise RuntimeError("SECRET_KEY environment variable is not set. Copy .env.example to .env and configure it.")
 
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
     SUPABASE_URL = os.environ.get("SUPABASE_URL")
     SUPABASE_PUBLISHABLE_KEY = os.environ.get("SUPABASE_PUBLISHABLE_KEY") or os.environ.get("SUPABASE_ANON_KEY")
     SUPABASE_SERVICE_ROLE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_STORAGE_PATH = os.environ.get("UPLOAD_STORAGE_PATH", "./storage")
     MAX_CONTENT_LENGTH = int(os.environ.get("MAX_UPLOAD_SIZE_MB", 10)) * 1024 * 1024
     ALLOWED_UPLOAD_EXTENSIONS = {"pdf", "doc", "docx"}
     ALLOWED_UPLOAD_MIME_TYPES = {"application/pdf","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document"}
+    SESSION_TOKEN_DIR = os.environ.get("SESSION_TOKEN_DIR", os.path.join(basedir, ".session_tokens"))
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = "Lax"
     SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "true").lower() == "true"
