@@ -1,0 +1,35 @@
+name: LMPS Tests
+
+on:
+  push:
+    branches:
+      - main
+      - db10-supabase-migration
+  pull_request:
+    branches:
+      - main
+      - db10-supabase-migration
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      SECRET_KEY: ci-test-secret
+      SUPABASE_URL: https://example.supabase.co
+      SUPABASE_PUBLISHABLE_KEY: ci-publishable-key
+      SUPABASE_SERVICE_ROLE_KEY: ci-service-role-key
+      SESSION_TOKEN_DIR: /tmp/lmps_sessions
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest -q
