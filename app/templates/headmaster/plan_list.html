@@ -1,0 +1,8 @@
+{% extends "shared/base.html" %}
+{% block title %}{{ title }} — Adidome DA/RC JHS LPMS{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="panel"><div class="panel-toolbar"><span class="muted">{{ plans|length }} plans</span></div><table><thead><tr><th>Reference</th><th>Teacher</th><th>Subject</th><th>Class</th><th>Week</th><th>Status</th><th></th></tr></thead><tbody>
+{% for plan in plans %}<tr><td class="ref">{{ plan.reference }}</td><td>{{ plan.teacher.user.full_name }}</td><td>{{ plan.subject.name }}</td><td>{{ plan.class_.name }}</td><td>{{ plan.week }}</td><td><span class="pill {{ plan.current_status|pill_class }}">{{ plan.current_status|replace('_',' ')|title }}</span></td><td><a class="btn ghost small" href="{{ url_for('headmaster.review_plan', plan_id=plan.id) }}">Open</a></td></tr>
+{% else %}<tr><td colspan="7" class="empty">No plans found.</td></tr>{% endfor %}</tbody></table></div>
+{% endblock %}
