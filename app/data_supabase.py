@@ -10,7 +10,6 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from types import SimpleNamespace
-from flask import session
 
 from app.supabase_client import client_for_access_token
 
