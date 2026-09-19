@@ -48,7 +48,7 @@ Learner-plan documents use the private Supabase Storage bucket `learner-plan-att
 
 ## Vercel deployment
 
-The repository includes a Vercel Python entrypoint at `api/index.py` and a `vercel.json` configuration.
+The repository includes a Vercel Python entrypoint at `api/index.py` and a `vercel.json` configuration. For Vercel, run `supabase/migrations/DB-11-app-sessions.sql` in the LMPS Supabase SQL editor first.
 
 For the current LMPS deployment:
 1. Import repository `apetorgborprince/LMPS`.
@@ -59,6 +59,7 @@ For the current LMPS deployment:
    - `SUPABASE_URL`
    - `SUPABASE_PUBLISHABLE_KEY`
    - `SUPABASE_SERVICE_ROLE_KEY`
+   - `SESSION_STORE=database`
    - `SESSION_TOKEN_DIR=/tmp/lmps_sessions`
    - `SESSION_COOKIE_SECURE=true`
    - `SESSION_LIFETIME_MINUTES=60`
