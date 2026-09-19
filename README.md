@@ -46,5 +46,29 @@ The service-role key is server-only.
 ## Storage
 Learner-plan documents use the private Supabase Storage bucket `learner-plan-attachments` and `public.plan_attachments` metadata.
 
+## Vercel deployment
+
+The repository includes a Vercel Python entrypoint at `api/index.py` and a `vercel.json` configuration.
+
+For the current LMPS deployment:
+1. Import repository `apetorgborprince/LMPS`.
+2. Select branch `db10-supabase-migration`.
+3. Keep the project root at the repository root.
+4. Add these Vercel Environment Variables:
+   - `SECRET_KEY`
+   - `SUPABASE_URL`
+   - `SUPABASE_PUBLISHABLE_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `SESSION_TOKEN_DIR=/tmp/lmps_sessions`
+   - `SESSION_COOKIE_SECURE=true`
+   - `SESSION_LIFETIME_MINUTES=60`
+   - `MAX_UPLOAD_SIZE_MB=10`
+5. Do not commit or expose the Supabase service-role key.
+6. Redeploy after saving the variables.
+
+### Vercel session note
+
+LMPS currently uses a server-side filesystem token store to keep the browser cookie opaque. Vercel serverless storage is ephemeral, so this is suitable for initial deployment/testing but should be replaced with a persistent session store before relying on multi-instance production traffic.
+
 ## Deployment checklist
 Set a strong secret, use HTTPS, make SESSION_TOKEN_DIR private and persistent, configure Supabase Auth redirects/email, create the initial ADMIN, configure school/year/term, create staff accounts, create teacher assignments, assign SISO schools, and exercise one complete teacher → Headmaster → SISO workflow.
