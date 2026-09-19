@@ -20,7 +20,7 @@ class SupabaseDataError(RuntimeError):
 
 
 def _token() -> str:
-    token = session.get("supabase_access_token")
+    from app.supabase_auth import current_access_token\n    token = current_access_token()
     if not token:
         raise SupabaseDataError("Your Supabase session has expired. Please sign in again.")
     return token
