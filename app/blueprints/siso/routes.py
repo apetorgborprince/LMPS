@@ -47,6 +47,23 @@ def new_visit():
   except Exception as e:flash(str(e),"error")
  return render_template("siso/new_visit.html",schools=schools)
 def _reports():return repo().reports()
+@siso_bp.route("/visits/<visit_id>/observation",methods=["POST"])
+@login_required
+@require_role("SISO")
+def add_observation(visit_id):
+ try:
+  repo().add_observation(visit_id,request.form.get("area"),request.form.get("observation"),request.form.get("status"));log_action(current_user.id,"ADD_SISO_OBSERVATION","siso_monitoring_observation",visit_id);flash("Observation added.","success")
+ except Exception as e:flash(str(e),"error")
+ return redirect(url_for("siso.visits"))
+@siso_bp.route("/visits/<visit_id>/action",methods=["POST"])
+@login_required
+@require_role("SISO")
+def add_action(visit_id):
+ try:
+  repo().add_action(visit_id,request.form.get("action_point"),request.form.get("responsible_user_id") or None,request.form.get("due_date") or None);log_action(current_user.id,"ADD_SISO_ACTION_POINT","siso_action_point",visit_id);flash("Action point added.","success")
+ except Exception as e:flash(str(e),"error")
+ return redirect(url_for("siso.visits"))
+
 @siso_bp.route("/reports/teacher-compliance")
 @login_required
 @require_role("SISO")
