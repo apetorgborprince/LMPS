@@ -19,6 +19,7 @@ class Config:
     ALLOWED_UPLOAD_EXTENSIONS = {"pdf", "doc", "docx"}
     ALLOWED_UPLOAD_MIME_TYPES = {"application/pdf","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document"}
     SESSION_TOKEN_DIR = os.environ.get("SESSION_TOKEN_DIR", os.path.join(basedir, ".session_tokens"))
+    SESSION_STORE = os.environ.get("SESSION_STORE", "filesystem").lower()
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = "Lax"
     SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "true").lower() == "true"
